@@ -1,4 +1,14 @@
+.board-row{
+    height: 50px;
+    width: 150px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 .square{
-    height: 60px;
-    width: 60px;
+    height: 50px;
+    width: 50px;
+    padding: 6px;
+    font-size: 30px;
+    font-weight: bold;
 }
