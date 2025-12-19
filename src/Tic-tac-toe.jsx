@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import '../css/Tic-tac-toe.css'
+import '../css/Tic-tac-toe.css';
 
 function Square({value, onSquareClick}){
 
@@ -10,18 +10,11 @@ function Square({value, onSquareClick}){
     );
 }
 
-function Board(){
-
-    const [xIsNext, setXIsNext] = useState(true);
-    const [squares, setSquares] = useState(Array(9).fill(null));
+function Board({xIsNext, squares, onPlay}){
 
     function handleClick(i){
 
         if(squares[i] || calculateWinner(squares)){
-            return;
-        }
-
-        if(squares[i]){
             return;
         }
 
@@ -32,8 +25,7 @@ function Board(){
             nextSquares[i] = "O";
         }
 
-        setSquares(nextSquares);
-        setXIsNext(!xIsNext);
+        onPlay(nextSquares);
     }
 
     const winner = calculateWinner(squares);
@@ -46,9 +38,7 @@ function Board(){
 
     return(
         <>
-
         <div className='status' >{status}</div>
-
         <div className='board'>
             <div className='board-row'>
             <Square value={squares[0]} onSquareClick={() => handleClick(0)} />
@@ -68,18 +58,18 @@ function Board(){
             <Square value={squares[8]} onSquareClick={() => handleClick(8)} />
             </div>
         </div>
-        </>
-        
+        </>  
     );
 }
 
 export default function Game(){
     const [xIsNext, setXIsNext] = useState(true);
-    const [history, setHistory] = useState(Array(9).fill(null));
+    const [history, setHistory] = useState([Array(9).fill(null)]);
     const currentSquare = history[history.length-1];
 
     function handlePlay(nextSquares){
-
+        setHistory([...history, nextSquares]);
+        setXIsNext(!xIsNext);
     }
 
     return(
@@ -88,7 +78,7 @@ export default function Game(){
                 <Board xIsNext={xIsNext} squares={currentSquare} onPlay={handlePlay} />
             </div>
             <div className='game-info'>
-                <ol></ol>
+                <ol>{}</ol>
             </div>
         </div>
     );
@@ -101,7 +91,7 @@ function calculateWinner(squares){
         [6,7,8],
         [0,3,6],
         [1,4,7],
-        [2,6,8],
+        [2,5,8],
         [0,4,8],
         [2,4,6]
     ];
